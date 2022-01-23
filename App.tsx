@@ -1,36 +1,52 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * Generated with the TypeScript template
- * https://github.com/react-native-community/react-native-template-typescript
- *
- * @format
- */
+import React, { useState, useEffect }  from 'react';
+import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import SplashScreen from './src/Screens/SplashScreen';
+import HomeScreen from './src/Screens/HomeScreen';
+import { Dimensions } from 'react-native';
+import appActions from './src/Redux/Actions/appActions';
+import { useDispatch } from 'react-redux';
 
-import React, {useEffect} from 'react';
-import {Text, ScrollView} from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
-import postsActions from './src/Redux/Actions/PostsActions';
+const Stack = createNativeStackNavigator();
 
 const App = () => {
-  const postsList = useSelector(({postsState: {posts}}: any) => posts) || [];
-
   const dispatch = useDispatch();
 
+  const [dimensions, setDimensions] = useState({
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
+  });
+
+  Dimensions.addEventListener('change', () => {
+    setDimensions({
+      width: Dimensions.get('window').width,
+      height: Dimensions.get('window').height,
+    })
+  });
+
   useEffect(() => {
-    dispatch(postsActions.getPosts());
-  }, [dispatch]);
+    dispatch(appActions.setDimensions({
+      width: dimensions.width,
+      height: dimensions.height,
+      isLandscape: dimensions.width < dimensions.height,
+    }));
+  }, [dimensions])
 
   return (
-    <ScrollView contentContainerStyle={{flexGrow: 1}}>
-      {postsList &&
-        postsList.map((post: any, index: number) => (
-          <Text style={{color: '#fff'}} key={index}>
-            {post.title}
-          </Text>
-        ))}
-    </ScrollView>
+    <NavigationContainer>
+      <Stack.Navigator>
+        <Stack.Screen
+          name="SplashScreen"
+          component={SplashScreen}
+          options={{headerShown: false}}
+        />
+        <Stack.Screen
+          name="HomeScreen"
+          component={HomeScreen}
+          options={{headerShown: false}}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 };
 
