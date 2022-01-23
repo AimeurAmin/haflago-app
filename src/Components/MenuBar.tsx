@@ -1,13 +1,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import * as React from 'react';
-import { Text, View, StyleSheet, Image, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import MIcon from 'react-native-vector-icons/MaterialIcons';
 import WhiteLogo from '../assets/WhiteLogo.svg';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import appActions from '../Redux/Actions/appActions';
 
 const MenuBar = () => {
   const dispatch = useDispatch();
+  const menuIsOpen: boolean = useSelector(({ appState: { menuIsOpen } }: any) => menuIsOpen);
 
   const handleMenu = () => {
     dispatch(appActions.toggleMenu());
@@ -15,7 +16,7 @@ const MenuBar = () => {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={handleMenu}>
-        <MIcon name={'menu'} size={30} color={'#FFF'} />
+        <MIcon name={menuIsOpen ? 'close' : 'menu'} size={35} color={'#FFF'} />
       </TouchableOpacity>
       <WhiteLogo width={100} height={50} />
       <View style={styles.picCotnainer}>
