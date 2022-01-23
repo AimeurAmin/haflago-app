@@ -19,12 +19,14 @@ const MenuBar = () => {
         <MIcon name={menuIsOpen ? 'close' : 'menu'} size={35} color={'#FFF'} />
       </TouchableOpacity>
       <WhiteLogo width={100} height={50} />
-      <View style={styles.picCotnainer}>
-        <Image
-          source={require('../assets/Userpic.png')}
-          style={styles.userpic}
-        />
-      </View>
+      <TouchableOpacity>
+        <View style={styles.picCotnainer}>
+          <Image
+            source={require('../assets/Userpic.png')}
+            style={styles.userpic}
+          />
+        </View>
+      </TouchableOpacity>
     </View>
   );
 };
