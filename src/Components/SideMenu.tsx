@@ -1,17 +1,17 @@
 import * as React from 'react';
-import { View, StyleSheet, Text, Animated } from 'react-native';
+import { View, StyleSheet, Text, Animated, TouchableOpacity, Dimensions } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import appActions, { AppStateModel } from '../Redux/Actions/appActions';
-import { useRef, useEffect, useState } from 'react';
+import { useRef, useEffect } from 'react';
 
 const SideMenu = ({ children }: any) => {
   const dispatch = useDispatch();
   const { menuIsOpen, dimensions }: AppStateModel = useSelector(({ appState }: any) => appState);
 
   const offSetValueX = useRef(new Animated.Value(0)).current,
-        offSetValueY = useRef(new Animated.Value(0)).current,
-        scaleValue = useRef(new Animated.Value(menuIsOpen ? 0.8 : 1)).current;
-    
+    offSetValueY = useRef(new Animated.Value(0)).current,
+    scaleValue = useRef(new Animated.Value(menuIsOpen ? 0.8 : 1)).current;
+
 
   useEffect(() => {
     offSetValueX.setValue(0);
@@ -25,7 +25,7 @@ const SideMenu = ({ children }: any) => {
   useEffect(() => {
     _scale();
 
-    if( dimensions.isLandscape ) {
+    if (dimensions.isLandscape) {
       _offsetX();
     } else {
       _offsetY();
@@ -59,14 +59,24 @@ const SideMenu = ({ children }: any) => {
 
   return (
     <View style={styles.container}>
-      <Text>SideMenu</Text>
+      <View style={styles.menuContainer}>
+        <Text style={styles.text}>SideMenu</Text>
+      </View>
+
       <Animated.View style={{
         ...styles.closedMenuChildrenStyle,
         transform: [{ scale: scaleValue }, { translateX: offSetValueX }, { translateY: offSetValueY }],
-        borderRadius: menuIsOpen? 10 : 0,
+        borderRadius: menuIsOpen ? 10 : 0,
         overflow: 'hidden',
-      }}>{children}</Animated.View>
-    </View>
+      }}>
+        {menuIsOpen ? (
+          <TouchableOpacity activeOpacity={0.9} onPress={() => menuIsOpen ? dispatch(appActions.toggleMenu()) : undefined}>
+            {children}
+          </TouchableOpacity>
+        ) : <View>{children}</View>
+        }
+      </Animated.View>
+    </View >
   );
 };
 
@@ -77,6 +87,7 @@ const styles = StyleSheet.create({
     flex: 1,
     position: 'relative',
     backgroundColor: 'white',
+    color: 'black'
   },
   closedMenuChildrenStyle: {
     position: 'absolute',
@@ -85,4 +96,12 @@ const styles = StyleSheet.create({
     flexGrow: 1,
     color: 'white',
   },
+  menuContainer: {
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height
+  },
+  text: {
+    color: 'black',
+    fontSize: 40
+  }
 });
