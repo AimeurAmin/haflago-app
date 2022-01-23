@@ -16,10 +16,10 @@ const SideMenu = ({ children }: any) => {
   useEffect(() => {
     offSetValueX.setValue(0);
     offSetValueY.setValue(0);
-    if(menuIsOpen) {
+    if (menuIsOpen) {
       dispatch(appActions.toggleMenu());
     }
-    
+
   }, [dimensions.isLandscape]);
 
   useEffect(() => {
