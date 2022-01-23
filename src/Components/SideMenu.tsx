@@ -7,7 +7,6 @@ import { useRef, useEffect, useState } from 'react';
 const SideMenu = ({ children }: any) => {
   const dispatch = useDispatch();
   const { menuIsOpen, dimensions }: AppStateModel = useSelector(({ appState }: any) => appState);
-  const [orientationChanged, setOrientationChange] = useState(false);
 
   const offSetValueX = useRef(new Animated.Value(0)).current,
         offSetValueY = useRef(new Animated.Value(0)).current,
