@@ -102,6 +102,6 @@ const styles = StyleSheet.create({
   },
   text: {
     color: 'black',
-    fontSize: 40
+    fontSize: 16
   }
 });
