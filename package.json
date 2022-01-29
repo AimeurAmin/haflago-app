@@ -12,7 +12,9 @@
   "dependencies": {
     "@react-navigation/native": "^6.0.6",
     "@react-navigation/native-stack": "^6.2.5",
+    "@types/react-native-vector-icons": "^6.4.10",
     "axios": "^0.25.0",
+    "formik": "^2.2.9",
     "react": "17.0.2",
     "react-native": "0.66.4",
     "react-native-safe-area-context": "^3.3.2",
@@ -22,7 +24,8 @@
     "react-native-vector-icons": "^9.0.0",
     "react-redux": "^7.2.6",
     "redux": "^4.1.2",
-    "redux-thunk": "^2.4.1"
+    "redux-thunk": "^2.4.1",
+    "yup": "^0.32.11"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",

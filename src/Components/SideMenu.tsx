@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
     flex: 1,
     position: 'relative',
     backgroundColor: 'white',
-    color: 'black'
+    color: 'black',
   },
   closedMenuChildrenStyle: {
     position: 'absolute',

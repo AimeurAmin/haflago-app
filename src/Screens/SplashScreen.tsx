@@ -5,7 +5,7 @@ import { StatusBar, StyleSheet, Text, View } from 'react-native';
 const SplashScreen = ({navigation}: any) => {
   useEffect(() => {
     setTimeout(() => {
-      navigation.navigate('HomeScreen', {screen: 'HomeScreen'});
+      navigation.navigate('SignupScreen', {screen: 'SignupScreen'});
     }, 300);
   }, [navigation]);
 

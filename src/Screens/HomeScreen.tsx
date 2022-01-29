@@ -13,7 +13,7 @@ const HomeScreen = () => {
   return (
     <SafeAreaView>
       <SideMenu>
-        <View style={{ ...styles.container, width: dimensions.width, height: dimensions.height}}>
+        <View style={styles(dimensions).container}>
           <MenuBar />
         </View>
       </SideMenu>
@@ -23,10 +23,12 @@ const HomeScreen = () => {
 
 export default HomeScreen;
 
-const styles = StyleSheet.create({
+const styles = (dimensions: DimensionsModel) => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#6D47A8',
     color: '#FFF',
+    width: dimensions.width, 
+    height: dimensions.height
   },
 });
