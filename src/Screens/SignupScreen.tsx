@@ -1,13 +1,15 @@
 import { Button, StyleSheet, Text, View } from 'react-native';
-import React from 'react';
-import SideMenu from '../Components/SideMenu';
-import MenuBar from '../Components/MenuBar';
+import React, { useEffect } from 'react';
+import SideMenu from '../Components/Shared/SideMenu';
+import MenuBar from '../Components/Shared/MenuBar';
 import { DimensionsModel, AppStateModel } from '../Redux/Actions/appActions';
-import { useSelector } from 'react-redux';
-import AuthInput from '../Components/AuthInput';
+import { useSelector, useDispatch } from 'react-redux';
+import AuthInput from '../Components/Shared/AuthInput';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import { height } from '@mui/system';
+import RoundedButton from '../Components/Shared/RoundedButton';
+import { AuthModel, AuthStateModel } from '../Redux/Models/AuthModel';
+import { signUp } from '../Redux/Actions/authActions';
 
 const SignupSchema = Yup.object().shape({
   username: Yup.string().min(4, 'At least 4 characters').required('Required'),
@@ -18,11 +20,38 @@ const SignupSchema = Yup.object().shape({
     .matches(/[1-9]/, 'At least one number')
     .matches(/[!@#$%^&*(),.?":{}|<>]/, 'Must contain at least one special character')
     .required('Required'),
+  phone_number: Yup.string()
+    .min(10, 'Must contain at least 10 numbers')
+    .matches(
+      /^(?:(?:\+|00)213[\s.-]{0,3}(?:\(0\)[\s.-]{0,3})?|0)[1-9](?:(?:[\s.-]?\d{2}){4}|\d{2}(?:[\s.-]?\d{3}){2})$/,
+      'Should only contain numbers'
+    )
+    .required('Required')
 });
 
-const SignupScreen = () => {
+const SignupScreen = ({navigation}: any) => {
+  const dispatch = useDispatch();
   const { dimensions }: AppStateModel = useSelector(({ appState }: any) => appState);
+  const {isLoading, error} = useSelector(({authState : { isLoading, error }}: {authState: AuthStateModel}) => ({ isLoading, error}));
   const style = styles(dimensions);
+
+  useEffect(
+    () =>
+      navigation.addListener('beforeRemove', (e: any) => {
+        e.preventDefault();
+      }),
+    [navigation],
+  );
+
+  useEffect(() => {
+    console.log(error);
+    
+  }, [])
+
+  const submit = (values: AuthModel) => { 
+    dispatch(signUp(values));
+  }
+
   return (
     <SideMenu>
       <View style={style.container}>
@@ -32,9 +61,9 @@ const SignupScreen = () => {
             username: '',
             email: '',
             password: '',
+            phone_number: ''
           }}
-          isInitialValid={false}
-          onSubmit={values => console.warn(values)}
+          onSubmit={(values) => submit(values)}
           validationSchema={SignupSchema}
           >
           {({ handleChange, handleBlur, handleSubmit, values, errors, touched }) => {
@@ -65,6 +94,17 @@ const SignupScreen = () => {
                 <View style={style.inputContainer}>
                   <AuthInput 
                     style={style.input} 
+                    placeholder='Your phone number'
+                    onChangeText={handleChange('phone_number')}
+                    onBlur={handleBlur('phone_number')}
+                    value={values.phone_number}
+                    isCorrect={(values.phone_number.length > 0) && !errors.phone_number && touched.phone_number}
+                  />
+                    {errors.phone_number && touched.phone_number ? <Text>{errors.phone_number}</Text> : null}
+                </View>
+                <View style={style.inputContainer}>
+                  <AuthInput 
+                    style={style.input} 
                     placeholder='Your password'
                     secureTextEntry={true}
                     onChangeText={handleChange('password')}
@@ -74,15 +114,18 @@ const SignupScreen = () => {
                   />
                     {errors.password && touched.password ? <Text>{errors.password}</Text> : null}
                 </View>
-                <Button onPress={handleSubmit} title="Submit"/>
+                {/* <Button onPress={handleSubmit} title="Submit"/> */}
+                <RoundedButton onPress={handleSubmit} isLoading={isLoading}/>
               </View>
             )
           }}
 
           </Formik>
-        {/* <View style={style.bottom}>
-          <Text>Buttons</Text>
-        </View> */}
+        {error && 
+          <View style={style.bottom}>
+            <Text>{error.status}</Text>
+          </View>
+        }
       </View>
     </SideMenu>
   );
