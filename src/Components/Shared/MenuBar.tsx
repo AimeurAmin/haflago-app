@@ -2,9 +2,9 @@
 import * as React from 'react';
 import { View, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import MIcon from 'react-native-vector-icons/MaterialIcons';
-import WhiteLogo from '../assets/WhiteLogo.svg';
+import WhiteLogo from '../../assets/WhiteLogo.svg';
 import { useDispatch, useSelector } from 'react-redux';
-import appActions from '../Redux/Actions/appActions';
+import appActions from '../../Redux/Actions/appActions';
 
 const MenuBar = () => {
   const dispatch = useDispatch();
@@ -22,7 +22,7 @@ const MenuBar = () => {
       <TouchableOpacity>
         <View style={styles.picCotnainer}>
           <Image
-            source={require('../assets/Userpic.png')}
+            source={require('../../assets/Userpic.png')}
             style={styles.userpic}
           />
         </View>

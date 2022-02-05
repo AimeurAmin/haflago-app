@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { View, StyleSheet, Text, Animated, TouchableOpacity, Dimensions } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-import appActions, { AppStateModel } from '../Redux/Actions/appActions';
+import appActions, { AppStateModel } from '../../Redux/Actions/appActions';
 import { useRef, useEffect } from 'react';
 
 const SideMenu = ({ children }: any) => {

@@ -1,8 +1,8 @@
 import React from 'react';
 import { StyleSheet, Text, TextInput, View } from 'react-native';
 
-import CorrectIndicator from '../assets/svg/CorrectIndicator.svg';
-import WrongIndicator from '../assets/svg/WrongIndicator.svg';
+import CorrectIndicator from '../../assets/svg/CorrectIndicator.svg';
+import WrongIndicator from '../../assets/svg/WrongIndicator.svg';
 
 interface Props {
   isCorrect?: boolean;
