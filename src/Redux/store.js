@@ -3,6 +3,7 @@ import thunk from 'redux-thunk';
 import {combineReducers} from 'redux';
 import PostsReducer from './Reducers/PostsReducer';
 import AppReducer from './Reducers/AppReducer';
+import AuthReducer from './Reducers/AuthReducer';
 
 const initialState = {};
 
@@ -10,7 +11,8 @@ const middleware = [thunk];
 
 const reducers = combineReducers({
   postsState: PostsReducer,
-  appState: AppReducer
+  appState: AppReducer,
+  authState: AuthReducer
 });
 
 let composeEnhancers = compose;
