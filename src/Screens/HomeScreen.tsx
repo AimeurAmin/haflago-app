@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { StyleSheet, View } from 'react-native';
-import SideMenu from '../Components/SideMenu';
-import MenuBar from '../Components/MenuBar';
+import SideMenu from '../Components/Shared/SideMenu';
+import MenuBar from '../Components/Shared/MenuBar';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { useSelector } from 'react-redux';
 import { DimensionsModel } from '../Redux/Actions/appActions';
