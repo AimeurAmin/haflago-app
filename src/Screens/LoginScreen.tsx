@@ -1,11 +1,14 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
-const LoginScreen = () => {
+const LoginScreen = ({navigation}: any) => {
   return (
     <SafeAreaView style={styles.container}>
       <Text>Login Screen</Text>
+      <TouchableOpacity  onPress={() => navigation.navigate('HomeScreen', {screen: 'HomeScreen'})}>
+        <Text>Go to Home</Text>
+      </TouchableOpacity>
     </SafeAreaView>
   );
 };
