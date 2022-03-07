@@ -14,8 +14,9 @@ const AuthInput = (props: any) => {
   const { isCorrect = false, placeholder = '', style, ...rest } = props;
   return (
     <View style={{...styles.container, ...style}}>
-      <TextInput style={styles.textInput} placeholder={placeholder} {...rest}/>
-      {isCorrect? <CorrectIndicator width={30} /> : <WrongIndicator width={30} />}
+      <TextInput style={[styles.textInput, {maxWidth: props.maxWidth || '95%'}]} placeholder={placeholder} placeholderTextColor="#CCC" {...rest}/>
+      
+      {(isCorrect? <CorrectIndicator width={30} /> : <WrongIndicator width={30} />)}
     </View>
   );
 };
@@ -25,12 +26,13 @@ export default AuthInput;
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    borderRadius: 15,
+    borderRadius: 10,
     paddingHorizontal: 15,
     paddingVertical: 5,
   },
   textInput: {
     fontSize: 16,
-    flexGrow: 1
+    flexGrow: 1,
+    color: '#FFF'
   }
 });
