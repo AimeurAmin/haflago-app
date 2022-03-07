@@ -3,12 +3,13 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import appActions from './src/Redux/Actions/appActions';
 import { useDispatch } from 'react-redux';
-import { Dimensions } from 'react-native';
+import { Dimensions, View } from 'react-native';
 
 import SplashScreen from './src/Screens/SplashScreen';
 import HomeScreen from './src/Screens/HomeScreen';
 import LoginScreen from './src/Screens/LoginScreen';
-import SignupScreen from './src/Screens/SignupScreen';
+import SignupScreen from './src/Screens/Auth/SignupScreen';
+import ValidateAccountScreen from './src/Screens/Auth/ValidateAccountScreen/ValidateAccountScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -42,22 +43,27 @@ const App = () => {
           name="SplashScreen"
           component={SplashScreen}
           options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="HomeScreen"
-          component={HomeScreen}
-          options={{headerShown: false}}
-        />
-        <Stack.Screen
-          name="LoginScreen"
-          component={LoginScreen}
-          options={{headerShown: false}}
-        />
+          />
         <Stack.Screen
           name="SignupScreen"
           component={SignupScreen}
           options={{headerShown: false}}
-        />
+          />
+        <Stack.Screen
+          name="HomeScreen"
+          component={HomeScreen}
+          options={{headerShown: false}}
+          />
+        <Stack.Screen
+          name="LoginScreen"
+          component={LoginScreen}
+          options={{headerShown: false}}
+          />
+        <Stack.Screen
+          name="ValidateAccountScreen"
+          component={ValidateAccountScreen}
+          options={{headerShown: false}}
+          />
       </Stack.Navigator>
     </NavigationContainer>
   );
