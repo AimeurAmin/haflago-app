@@ -1,9 +1,10 @@
 
 export interface AuthStateModel {
-  user: UserModel;
+  user?: UserModel;
   isConnected: boolean;
   error: any;
   isLoading: boolean;
+  verifyEmail?: boolean;
 }
 
 export interface UserModel{

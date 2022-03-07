@@ -1,13 +1,14 @@
 import { AuthStateModel, UserModel } from '../Models/AuthModel';
-import { AUTH_REQUEST, AUTH_SUCCESS, AUTH_FAIL } from '../Actions/authActions';
+import { AUTH_REQUEST, AUTH_SUCCESS, AUTH_FAIL, EMAIL_VERIFICATION, validateEmail, RESET } from '../Actions/authActions';
 
 
 
 const initialState: AuthStateModel = {
-  user: {},
+  user: undefined,
   isConnected: false,
   error: undefined,
-  isLoading: false
+  isLoading: false,
+  verifyEmail: undefined
 };
 
 const AuthReducer = (state = initialState, action: {type: string; payload: any}) => {
@@ -15,7 +16,7 @@ const AuthReducer = (state = initialState, action: {type: string; payload: any})
     case AUTH_REQUEST:
       return {
         ...state,
-        isLoading: true,
+        isLoading: action.payload,
         error: undefined
       };
 
@@ -23,7 +24,6 @@ const AuthReducer = (state = initialState, action: {type: string; payload: any})
       return {
         ...state,
         isConnected: true,
-        isLoading: false,
         user: {...action.payload},
         error: undefined
       };
@@ -34,10 +34,26 @@ const AuthReducer = (state = initialState, action: {type: string; payload: any})
             
       return {
         isConnected: false,
-        isLoading: false,
-        error: action.payload,
+        error: {...action.payload},
         user: undefined
       };
+
+    case EMAIL_VERIFICATION: 
+      console.log();
+      return {
+        ...state,
+        verifyEmail: action.payload
+      }
+
+    case RESET:
+      return {
+        user: undefined,
+        isConnected: false,
+        error: undefined,
+        isLoading: false,
+        verifyEmail: undefined
+      }
+      
     default:
       return state;
   }
