@@ -7,7 +7,7 @@ import { Dimensions, View } from 'react-native';
 
 import SplashScreen from './src/Screens/SplashScreen';
 import HomeScreen from './src/Screens/HomeScreen';
-import LoginScreen from './src/Screens/LoginScreen';
+import LoginScreen from './src/Screens/Auth/Login/LoginScreen';
 import SignupScreen from './src/Screens/Auth/SignupScreen';
 import ValidateAccountScreen from './src/Screens/Auth/ValidateAccountScreen/ValidateAccountScreen';
 
@@ -40,6 +40,11 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
+          name="LoginScreen"
+          component={LoginScreen}
+          options={{headerShown: false}}
+          />
+        <Stack.Screen
           name="SplashScreen"
           component={SplashScreen}
           options={{headerShown: false}}
@@ -52,11 +57,6 @@ const App = () => {
         <Stack.Screen
           name="HomeScreen"
           component={HomeScreen}
-          options={{headerShown: false}}
-          />
-        <Stack.Screen
-          name="LoginScreen"
-          component={LoginScreen}
           options={{headerShown: false}}
           />
         <Stack.Screen

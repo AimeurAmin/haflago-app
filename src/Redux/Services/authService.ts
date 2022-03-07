@@ -36,10 +36,17 @@ export default class AuthService {
   // };
 
   signup = (data: {username: string; email: string; password: string; phone_number: string}) => {  
-    return axios.post(`${this.baseUrl}/signup`, data)
+    return axios.post(`${this.baseUrl}/signup`, data);
   }
 
-  signin = (data: { username?: string; email?: string; password: string }) => {
+  signin = (data: { username?: string; password: string }) => {
+    console.log('##data');
+    console.log(data);
+    console.warn(this.baseUrl);
+    console.warn(data);
+    
+    
+    
     return axios.post(`${this.baseUrl}/login`, data);
   };
 
