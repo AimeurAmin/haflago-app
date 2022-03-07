@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableOpacity } from 'react-native';
 import {
   CodeField,
   Cursor,
@@ -22,7 +22,8 @@ const CELL_COUNT = 6;
 
 const ValidateAccountScreen = ({navigation}: any) => {
   const dispatch = useDispatch();
-  const [codeSentCounter, setCodeSentCounter] = useState(0);
+  const [codeSent, setCodeSent] = useState(false);
+  const [secondsLeft, setSecondsLeft] = useState(5)
   const [value, setValue] = useState('');
   const ref = useBlurOnFulfill({value, cellCount: CELL_COUNT});
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({
@@ -62,8 +63,34 @@ const ValidateAccountScreen = ({navigation}: any) => {
       navigation.navigate('LoginScreen', {screen: 'LoginScreen'});
     }
   }, [value, verifyEmail]);
-  
 
+  // var timer;
+  // var counter = 5;
+  // useEffect(() => {
+  //   if(codeSent) {
+  //     timer = setInterval(() => {
+  //       console.log(secondsLeft);
+  //       
+  //       if (secondsLeft === 0) {
+  //         console.log('done');
+  //         setCodeSent(false);
+  //         clearInterval(timer);
+  //         setSecondsLeft(5)
+  //       } else {
+  //         if(codeSent) {
+  //           console.log('rani na9as rabak');
+  //           console.log(secondsLeft);
+  //           
+  //           setSecondsLeft((prev: any) => (prev - 1));
+  //         }
+  //           // setSecondsLeft((secondsLeft - 1));
+  //       }
+  //     },1000)      
+  //   } else {
+  //     setSecondsLeft(5);
+  //   }
+  // }, [codeSent])
+  
   return (
     <View style={styles.container}>
       <View style={styles.hint}>
@@ -94,10 +121,13 @@ const ValidateAccountScreen = ({navigation}: any) => {
           )}
         />
       </View>
-
-      {/* <View style={styles.buttonContainer}>
-        <RoundedButton text={'Confirm'} onPress={handleSubmit}/>
-      </View> */}
+      {/* {!codeSent ? */}
+        <TouchableOpacity onPress={() => { setCodeSent(true); }}>
+        <Text style={styles.resendCodeText}>Resend confirmation code</Text>
+      {/* </TouchableOpacity> :
+        <Text style={styles.resendCodeText}>Resend confirmation code ({secondsLeft})</Text>
+      } */}
+      
 
     </View>
   )

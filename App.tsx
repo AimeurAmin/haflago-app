@@ -40,6 +40,16 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
+          name="SignupScreen"
+          component={SignupScreen}
+          options={{headerShown: false}}
+          />
+        <Stack.Screen
+          name="ValidateAccountScreen"
+          component={ValidateAccountScreen}
+          options={{headerShown: false}}
+          />
+        <Stack.Screen
           name="LoginScreen"
           component={LoginScreen}
           options={{headerShown: false}}
@@ -50,18 +60,8 @@ const App = () => {
           options={{headerShown: false}}
           />
         <Stack.Screen
-          name="SignupScreen"
-          component={SignupScreen}
-          options={{headerShown: false}}
-          />
-        <Stack.Screen
           name="HomeScreen"
           component={HomeScreen}
-          options={{headerShown: false}}
-          />
-        <Stack.Screen
-          name="ValidateAccountScreen"
-          component={ValidateAccountScreen}
           options={{headerShown: false}}
           />
       </Stack.Navigator>

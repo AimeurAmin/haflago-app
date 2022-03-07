@@ -1,5 +1,5 @@
 import { StyleSheet, Dimensions } from 'react-native';
-import normalize from "../../../utils/RN/normalizeSize";
+import normalize from '../../../utils/RN/normalizeSize';
 
 export default StyleSheet.create({
   container: {
@@ -50,4 +50,9 @@ export default StyleSheet.create({
   focusCell: {
     // borderColor: '#000',
   },
+  resendCodeText: {
+    color: '#FAB55C',
+    fontSize: normalize(16),
+    marginVertical: 40
+  }
 });
