@@ -30,13 +30,13 @@ const ValidateAccountScreen = ({navigation}: any) => {
     setValue,
   });
 
-  const {username, verifyEmail} = useSelector(
-    ({authState : { user: { data: { username }}, verifyEmail }}: {authState: any}): any => ({username, verifyEmail}))
+  const {signUpData, verifyEmail} = useSelector(
+    ({authState : { user: { signUpData }, verifyEmail }}: {authState: any}): any => ({signUpData, verifyEmail}))
     ;
 
   useEffect(() => {
-    if(value.length === 6 && !verifyEmail) {
-      dispatch(validateEmail({username, v_code: value}));
+    if(value.length === 6 && !verifyEmail && signUpData.username) {
+      dispatch(validateEmail({username: signUpData?.username, v_code: value}));
       if(verifyEmail === false) {
         Snackbar.show({
           text: 'Code invalide!',

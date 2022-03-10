@@ -33,15 +33,10 @@ const SignupSchema = Yup.object().shape({
 
 const SignupScreen = ({navigation}: any) => {
   const { dimensions }: AppStateModel = useSelector(({ appState }: any) => appState);
-  const {isLoading, error, user} = useSelector(({authState : { isLoading, error, user }}: {authState: AuthStateModel}) => ({ isLoading, error, user}));
+  const {isLoading, error, signUpData} = useSelector(({authState : { isLoading, error, user: { signUpData } }}: {authState: AuthStateModel}) => ({ isLoading, error, signUpData}));
   
   const dispatch  = useDispatch();
-  const submit = (values: any) => {
-    console.log('values');
-    console.log(values);
-    
-    dispatch(signUp(values));
-  }
+
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
   const styles = stylesFunc(dimensions, isKeyboardVisible);
 
@@ -77,6 +72,7 @@ const SignupScreen = ({navigation}: any) => {
         },
       });
     } else if(error) {
+      console.error(error);
       Snackbar.show({
         text: 'Something went kinda wrong, please contact us.',
         duration: Snackbar.LENGTH_LONG,
@@ -88,10 +84,15 @@ const SignupScreen = ({navigation}: any) => {
       });
     }
 
-    if(user) {
+    if(signUpData) {
       navigation.navigate('ValidateAccountScreen', {screen: 'ValidateAccountScreen'});
     }
-  }, [error, user]);
+  }, [error, signUpData]);
+
+  const submit = (values: any) => {
+    dispatch(signUp(values));
+  }
+
   return (
     <SideMenu>
       <View style={styles.container}>

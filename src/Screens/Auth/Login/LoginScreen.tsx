@@ -1,6 +1,7 @@
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { Text, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import styles from './styles';
 
 const LoginScreen = ({navigation}: any) => {
   return (
@@ -14,10 +15,3 @@ const LoginScreen = ({navigation}: any) => {
 };
 
 export default LoginScreen;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#6D47A8'
-  }
-});

@@ -7,7 +7,7 @@ import { Dimensions, View } from 'react-native';
 
 import SplashScreen from './src/Screens/SplashScreen';
 import HomeScreen from './src/Screens/HomeScreen';
-import LoginScreen from './src/Screens/LoginScreen';
+import LoginScreen from './src/Screens/Auth/Login/LoginScreen';
 import SignupScreen from './src/Screens/Auth/SignupScreen';
 import ValidateAccountScreen from './src/Screens/Auth/ValidateAccountScreen/ValidateAccountScreen';
 

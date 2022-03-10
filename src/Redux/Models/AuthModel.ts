@@ -1,13 +1,20 @@
 
 export interface AuthStateModel {
-  user?: UserModel;
+  user: UserModel;
   isConnected: boolean;
+  isSignedUp: boolean,
   error: any;
   isLoading: boolean;
   verifyEmail?: boolean;
+  resendCode?: boolean;
 }
 
 export interface UserModel{
+  authData?: AuthDataModel;
+  signUpData?: SignUpDataModel;
+}
+
+export interface AuthDataModel {
   idToken?: {
     jwtToken: string;
     payload: {
@@ -27,7 +34,11 @@ export interface UserModel{
           exp: number;
           username: string
       }
-  }
+  };
+}
+
+export interface SignUpDataModel {
+
 }
 
 export interface AuthModel {
@@ -35,4 +46,14 @@ export interface AuthModel {
   email: string;
   password: string;
   phone_number: string;
+}
+
+export interface LoginModel {
+  username: string;
+  password: string;
+}
+
+export interface VerificationModel { 
+  username: string; 
+  v_code: string;
 }
