@@ -3,7 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import FeedIcon from '../../assets/svg/Feed.svg';
 import InboxIcon from '../../assets/svg/Inbox.svg';
 import MenuIcon from '../../assets/svg/Menu.svg';
-import FavIcon from '../../assets/svg/Favorite.svg';
+import FavIcon from '../../assets/svg/FavouriteWhite.svg';
 import NavItem from './NavItem';
 
 const NavFooter = () => {
@@ -22,7 +22,7 @@ export default NavFooter;
 const styles = StyleSheet.create({
   container: {
     width: '100%',
-    backgroundColor: '#6D47A8',
+    backgroundColor: '#3B276A',
     justifyContent: 'space-around',
     alignItems: 'center',
     paddingVertical: 10,

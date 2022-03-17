@@ -5,9 +5,8 @@ import WhiteLogo from '../../../assets/WhiteLogo.svg';
 import { useDispatch, useSelector } from 'react-redux';
 import appActions from '../../../Redux/Actions/appActions';
 import normalize from '../../../utils/RN/normalizeSize';
-import { resetDataAction } from '../../../Redux/Actions/authActions';
 
-const MenuBar = () => {
+const MenuBar = ({allowBack, navigation}: any) => {
   const dispatch = useDispatch();
   const menuIsOpen: boolean = useSelector(({ appState: { menuIsOpen } }: any) => menuIsOpen);
 
@@ -15,13 +14,23 @@ const MenuBar = () => {
     dispatch(appActions.toggleMenu());
   }
   const handleUserProfile = () => {
-    dispatch(resetDataAction());
+    // ...
+  }
+
+  const handleBackButton = () => {
+    navigation.navigate('HomeScreen', {screen: 'HomeScreen'}) 
   }
   return (
     <View style={styles.container}>
-      <TouchableOpacity onPress={handleMenu}>
-        <MIcon name={menuIsOpen ? 'close' : 'menu'} size={25} color={'#FFF'} />
-      </TouchableOpacity>
+      {!allowBack ? (
+        <TouchableOpacity onPress={handleMenu}>
+          <MIcon name={menuIsOpen ? 'close' : 'menu'} size={25} color={'#FFF'} />
+        </TouchableOpacity>
+        ) : (
+        <TouchableOpacity onPress={handleBackButton}>
+          <MIcon name={'arrow-back'} size={25} color={'#FFF'} />
+        </TouchableOpacity>
+      )}
       <WhiteLogo width={normalize(90)} height={normalize(35)} />
       <TouchableOpacity onPress={handleUserProfile}>
         <View style={styles.picCotnainer}>
@@ -44,7 +53,7 @@ const styles = StyleSheet.create({
     width: '100%',
     flexDirection: 'row',
     padding: 13,
-    backgroundColor: '#6D47A8',
+    backgroundColor: '#3B276A',
     borderColor: '#FFF',
   },
   userpic: {

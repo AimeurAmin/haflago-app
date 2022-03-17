@@ -1,18 +1,19 @@
 import { View, Text, StyleSheet, Dimensions, Platform, KeyboardAvoidingView, TouchableOpacity, Keyboard } from 'react-native';
 import React, { useEffect, useState } from 'react'
-import SideMenu from '../../Components/Shared/SideMenu/SideMenu'
-import { AppStateModel, DimensionsModel } from '../../Redux/Actions/appActions'
+import SideMenu from '../../../Components/Shared/SideMenu/SideMenu'
+import { AppStateModel, DimensionsModel } from '../../../Redux/Actions/appActions'
 import { useSelector, useDispatch } from 'react-redux';
-import AuthInput from '../../Components/Shared/AuthInput';
-import normalize from '../../utils/RN/normalizeSize';
+import AuthInput from '../../../Components/Shared/AuthInput';
+import normalize from '../../../utils/RN/normalizeSize';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import RoundedButton from '../../Components/Shared/RoundedButton';
-import { AuthStateModel } from '../../Redux/Models/AuthModel';
-import WhiteLogo from '../../assets/WhiteLogo.svg';
-import { signUp } from '../../Redux/Actions/authActions';
+import RoundedButton from '../../../Components/Shared/RoundedButton';
+import { AuthStateModel } from '../../../Redux/Models/AuthModel';
+import WhiteLogo from '../../../assets/WhiteLogo.svg';
+import { signUp } from '../../../Redux/Actions/authActions';
 
 import Snackbar from 'react-native-snackbar';
+import styles from './styles';
 const SignupSchema = Yup.object().shape({
   username: Yup.string().min(4, 'At least 4 characters').required('Required'),
   email: Yup.string().email('Invalid email').required('Required'),
@@ -38,7 +39,7 @@ const SignupScreen = ({navigation}: any) => {
   const dispatch  = useDispatch();
 
   const [isKeyboardVisible, setKeyboardVisible] = useState(false);
-  const styles = stylesFunc(dimensions, isKeyboardVisible);
+  const style = styles(dimensions, isKeyboardVisible);
 
  useEffect(() => {
     const keyboardDidShowListener = Keyboard.addListener(
@@ -95,7 +96,7 @@ const SignupScreen = ({navigation}: any) => {
 
   return (
     <SideMenu>
-      <View style={styles.container}>
+      <View style={style.container}>
         <Formik
           initialValues={{ 
             username: '',
@@ -110,44 +111,44 @@ const SignupScreen = ({navigation}: any) => {
             return (
             <KeyboardAvoidingView
               behavior={Platform.OS === "ios" ? "padding" : "height"} 
-              style={styles.formContainer}>
+              style={style.formContainer}>
               <View  style={{flex: isKeyboardVisible ? 1 : 2, justifyContent: 'center',}}>
                 <WhiteLogo width={normalize(isKeyboardVisible? 120 : 180)} height={normalize(isKeyboardVisible? 55 : 100)} />
               </View>
 
               <View>
-                <View style={styles.inputContainer}>
-                  <AuthInput style={styles.input} 
+                <View style={style.inputContainer}>
+                  <AuthInput style={style.input} 
                     placeholder='Your username'
                     onChangeText={handleChange('username')}
                     onBlur={handleBlur('username')}
                     value={values.username}
                     isCorrect={!errors.username && (values.username.length !== 0 || touched.username)}
                   />
-                  <Text style={styles.error}>{errors.username}</Text>
+                  <Text style={style.error}>{errors.username}</Text>
                 </View>
-                <View style={styles.inputContainer}>
-                  <AuthInput style={styles.input}
+                <View style={style.inputContainer}>
+                  <AuthInput style={style.input}
                     placeholder='Your e-mail address'
                     onChangeText={handleChange('email')}
                     onBlur={handleBlur('email')}
                     value={values.email}
                     isCorrect={!errors.email && (values.email.length !== 0 || touched.email)}
                   />
-                  <Text style={styles.error}>{errors.email}</Text>
+                  <Text style={style.error}>{errors.email}</Text>
                 </View>
-                <View style={styles.inputContainer}>
-                  <AuthInput style={styles.input} 
+                <View style={style.inputContainer}>
+                  <AuthInput style={style.input} 
                     placeholder='Your phone number'
                     onChangeText={handleChange('phone_number')}
                     onBlur={handleBlur('phone_number')}
                     value={values.phone_number}
                     isCorrect={!errors.phone_number && (values.phone_number.length !== 0 || touched.phone_number)}
                   />
-                  <Text style={styles.error}>{errors.phone_number}</Text>
+                  <Text style={style.error}>{errors.phone_number}</Text>
                 </View>
-                <View style={styles.inputContainer}>
-                  <AuthInput style={styles.input} 
+                <View style={style.inputContainer}>
+                  <AuthInput style={style.input} 
                     placeholder='Your password'
                     secureTextEntry={true}
                     onChangeText={handleChange('password')}
@@ -155,10 +156,10 @@ const SignupScreen = ({navigation}: any) => {
                     value={values.password}
                     isCorrect={!errors.password && (values.password.length !== 0 || touched.password)}
                   />
-                  <Text style={styles.error}>{errors.password}</Text>
+                  <Text style={style.error}>{errors.password}</Text>
                 </View>
               </View>
-              {!isKeyboardVisible &&  <View style={styles.buttonContainer}>
+              {!isKeyboardVisible &&  <View style={style.buttonContainer}>
                 <RoundedButton onPress={handleSubmit} isLoading={isLoading} text={'CREATE ACCOUNT'}/>
               </View>}
             </KeyboardAvoidingView>
@@ -171,34 +172,3 @@ const SignupScreen = ({navigation}: any) => {
 }
 
 export default SignupScreen
-
-const stylesFunc = (dimensions : DimensionsModel  = {}, isKeyboardVisible: boolean) => StyleSheet.create({
-  container: {
-    width: dimensions?.width,
-    flexDirection: 'column',
-    flexGrow: 1,
-    backgroundColor: '#3B276A',
-
-  },
-  formContainer: {
-    flex: isKeyboardVisible? 2 : 3,
-    alignItems: 'center',
-    paddingVertical: normalize(50),
-  },
-  inputContainer: {
-    width: normalize(300, 'width'),
-  },
-  input: {
-    backgroundColor: 'rgba(255, 255, 255, 0.25)',
-    borderRadius: normalize(15),
-  },
-  error: {
-    fontSize: normalize(12),
-    color: 'rgba(255, 255, 255, 0.8)',
-    marginLeft: normalize(5),
-  },
-  buttonContainer: {
-    flex: isKeyboardVisible ? 1 : 2,
-    justifyContent: 'center',
-  }
-})

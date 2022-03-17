@@ -32,6 +32,7 @@ const disconnect = () => ({ type: LOGOUT });
 const authService = new AuthService();
 
 /**
+ * Signup a new user
  * 
  * @param userData 
  * @returns 
@@ -56,6 +57,7 @@ export const signUp = (userData: AuthModel) => async (dispatch: any, ) => {
 }
 
 /**
+ * Login user using email / username
  * 
  * @param userData 
  * @returns 
@@ -78,6 +80,7 @@ export const login = (userData: LoginModel) => async (dispatch: any, ) => {
 }
 
 /**
+ * Verifies user account
  * 
  * @param userData 
  * @returns 
@@ -98,6 +101,7 @@ export const validateEmail = (userData: {username: string, v_code: string}) => a
 }
 
 /**
+ * Resends account verification code
  * 
  * @param username 
  * @returns 
@@ -119,6 +123,7 @@ export const resendVerificationCode  = (username: string) => async (dispatch: an
 }
 
 /**
+ * Logout from current user account
  * 
  * @returns 
  */
