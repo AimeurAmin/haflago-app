@@ -2,7 +2,7 @@ import { StyleSheet, Dimensions } from 'react-native';
 import { DimensionsModel } from '../../../Redux/Actions/appActions';
 import normalize from '../../../utils/RN/normalizeSize';
 
-export default (dimensions: DimensionsModel) => StyleSheet.create({
+export default (dimensions: DimensionsModel, activeIndex: number) => StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
@@ -13,7 +13,6 @@ export default (dimensions: DimensionsModel) => StyleSheet.create({
   content: {
     flex: 1,
     height: dimensions.height,
-    backgroundColor: 'red'
   },
   cardContainer: {
     padding: 15
@@ -33,13 +32,15 @@ export default (dimensions: DimensionsModel) => StyleSheet.create({
     position: 'absolute',
     backgroundColor: 'white',
     top: '45%',
-    left: '3%'
+    left: '3%',
+    opacity: .5
   },
   arrowRight: {
     position: 'absolute',
     backgroundColor: 'white',
     top: '45%',
-    right: '3%'
+    right: '3%',
+    opacity: .5
   },
   detailsContainer: {
     width: dimensions.width,
@@ -51,16 +52,16 @@ export default (dimensions: DimensionsModel) => StyleSheet.create({
     position: 'absolute',
     borderTopRightRadius: 50,
     borderTopLeftRadius: 50,
-    top: -50,
+    top: '-5%',
     zIndex: 99,
-    backgroundColor: 'white',
+    backgroundColor: 'red',
     width: dimensions.width,
-    height: 500,
+    height: '105%',
     paddingTop: (dimensions.height || 0) * .05,
     paddingHorizontal: (dimensions.width || 0) * .05,
 
   },
-  imagesIndicator: {
+  imagesThumbList: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',

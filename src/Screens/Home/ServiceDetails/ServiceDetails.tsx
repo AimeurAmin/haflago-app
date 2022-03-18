@@ -13,42 +13,43 @@ import normalize from '../../../utils/RN/normalizeSize';
 import ImageModel from '../../../Components/Shared/ImageModel/ImageModel';
 import { useState, useRef } from 'react';
 
+const dummyImages = [
+  {
+    id: '1',
+    src: 'https://www.haflago.com/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fadastra-creative%2Fimage%2Fupload%2Fq_auto%2Cf_auto%2Fd3b7qee9b7ig9nlppgov&w=640&q=75'
+  },{
+    id: '2',
+    src: 'https://www.haflago.com/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fadastra-creative%2Fimage%2Fupload%2Fq_auto%2Cf_auto%2Fqsfh364vpftwtgg7m7e3&w=640&q=75'
+  },{
+    id: '3',
+    src: 'https://www.haflago.com/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fadastra-creative%2Fimage%2Fupload%2Fq_auto%2Cf_auto%2Fmh16odjkjt0dmfm24asm&w=640&q=75'
+  }, {
+    id: '4',
+    src: 'https://www.haflago.com/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fadastra-creative%2Fimage%2Fupload%2Fq_auto%2Cf_auto%2Fumwutae8fy0s0xhatgz1&w=640&q=75'
+  },{
+    id: '5',
+    src: 'https://www.haflago.com/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fadastra-creative%2Fimage%2Fupload%2Fq_auto%2Cf_auto%2Fd3b7qee9b7ig9nlppgov&w=640&q=75'
+  },{
+    id: '6',
+    src: 'https://www.haflago.com/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fadastra-creative%2Fimage%2Fupload%2Fq_auto%2Cf_auto%2Fqsfh364vpftwtgg7m7e3&w=640&q=75'
+  },{
+    id: '7',
+    src: 'https://www.haflago.com/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fadastra-creative%2Fimage%2Fupload%2Fq_auto%2Cf_auto%2Fmh16odjkjt0dmfm24asm&w=640&q=75'
+  }, {
+    id: '8',
+    src: 'https://www.haflago.com/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fadastra-creative%2Fimage%2Fupload%2Fq_auto%2Cf_auto%2Fumwutae8fy0s0xhatgz1&w=640&q=75'
+  }
+]
+
 const ServiceDetails = ({navigation}: any) => {
   const dimensions: DimensionsModel = useSelector(({appState}: any) => appState.dimensions);
-  const style = styles(dimensions);
-  const dummyImages = [
-    {
-      id: '1',
-      src: 'https://www.haflago.com/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fadastra-creative%2Fimage%2Fupload%2Fq_auto%2Cf_auto%2Fd3b7qee9b7ig9nlppgov&w=640&q=75'
-    },{
-      id: '2',
-      src: 'https://www.haflago.com/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fadastra-creative%2Fimage%2Fupload%2Fq_auto%2Cf_auto%2Fqsfh364vpftwtgg7m7e3&w=640&q=75'
-    },{
-      id: '3',
-      src: 'https://www.haflago.com/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fadastra-creative%2Fimage%2Fupload%2Fq_auto%2Cf_auto%2Fmh16odjkjt0dmfm24asm&w=640&q=75'
-    }, {
-      id: '4',
-      src: 'https://www.haflago.com/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fadastra-creative%2Fimage%2Fupload%2Fq_auto%2Cf_auto%2Fumwutae8fy0s0xhatgz1&w=640&q=75'
-    },{
-      id: '5',
-      src: 'https://www.haflago.com/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fadastra-creative%2Fimage%2Fupload%2Fq_auto%2Cf_auto%2Fd3b7qee9b7ig9nlppgov&w=640&q=75'
-    },{
-      id: '6',
-      src: 'https://www.haflago.com/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fadastra-creative%2Fimage%2Fupload%2Fq_auto%2Cf_auto%2Fqsfh364vpftwtgg7m7e3&w=640&q=75'
-    },{
-      id: '7',
-      src: 'https://www.haflago.com/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fadastra-creative%2Fimage%2Fupload%2Fq_auto%2Cf_auto%2Fmh16odjkjt0dmfm24asm&w=640&q=75'
-    }, {
-      id: '8',
-      src: 'https://www.haflago.com/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fadastra-creative%2Fimage%2Fupload%2Fq_auto%2Cf_auto%2Fumwutae8fy0s0xhatgz1&w=640&q=75'
-    }
-  ]
   const [visibleModel, setVisibleModel] = useState('');
   const topRef = useRef<any>();
   const thumbRef = useRef<any>();
   const [activeIndex, setActiveIndex] = useState(0);
   const {width} = Dimensions.get('screen');
   const IMAGE_SIZE = ((Dimensions.get('screen').width + Dimensions.get('screen').height) / 2) * .13;
+  const style = styles(dimensions, activeIndex);
 
   const scrollToActiveIndex = (index: number) => {
     setActiveIndex(index);
@@ -109,8 +110,8 @@ const ServiceDetails = ({navigation}: any) => {
           </View>
           <View style={style.detailsContainer}>
             <View style={style.details}>
-                <View style={style.imagesIndicator}>
-                  <TouchableOpacity >
+                <View style={style.imagesThumbList}>
+                  <TouchableOpacity onPress={() => scrollToActiveIndex(activeIndex > 0 ? activeIndex - 1 : activeIndex)} >
                     <ArrowLeft width={normalize(30)} height={normalize(45)} />
                   </TouchableOpacity>
                   <FlatList
@@ -131,16 +132,16 @@ const ServiceDetails = ({navigation}: any) => {
                             source={{uri: item.src}}
                             style={[style.imageButton, {
                               borderWidth: 2,
-                              borderColor: activeIndex === index ? '#000' : 'transparent' 
+                              borderColor: activeIndex === index ? '#3B276A' : 'transparent' 
                             }]}
                             />
                         </TouchableWithoutFeedback>
                       )
                     }}
                     />
-                    <TouchableOpacity>
-                      <ArrowRight width={normalize(30)} height={normalize(45)} />
-                    </TouchableOpacity>
+                  <TouchableOpacity onPress={() => scrollToActiveIndex(activeIndex < dummyImages.length - 1 ? activeIndex + 1 : activeIndex)}>
+                    <ArrowRight width={normalize(30)} height={normalize(45)} />
+                  </TouchableOpacity>
                 </View>
             </View>
           </View>
