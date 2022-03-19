@@ -2,8 +2,6 @@ import { View, Text } from 'react-native'
 import React from 'react'
 import styles from './styles'
 import ShareIcon from '../../../../assets/svg/ShareIcon.svg';
-import { normalizeWidth } from '../../../../utils/RN/normalizeSize';
-import normalize from '../../../../utils/RN/normalizeSize';
 import adjust from '../../../../utils/RN/adjust';
 
 const ShareButton = () => {

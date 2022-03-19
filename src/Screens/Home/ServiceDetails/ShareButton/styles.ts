@@ -1,7 +1,4 @@
 import { StyleSheet } from "react-native";
-import normalize from '../../../../utils/RN/normalizeSize';
-import { normalizeWidth } from '../../../../utils/RN/normalizeSize';
-import adjust from '../../../../utils/RN/adjust';
 
 export default StyleSheet.create({
   container: {
