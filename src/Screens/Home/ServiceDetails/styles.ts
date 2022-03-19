@@ -1,6 +1,7 @@
 import { StyleSheet, Dimensions } from 'react-native';
 import { DimensionsModel } from '../../../Redux/Actions/appActions';
 import normalize from '../../../utils/RN/normalizeSize';
+import adjust from '../../../utils/RN/adjust';
 
 export default (dimensions: DimensionsModel, activeIndex: number) => StyleSheet.create({
   container: {
@@ -9,6 +10,7 @@ export default (dimensions: DimensionsModel, activeIndex: number) => StyleSheet.
     color: '#FFF',
     width: dimensions.width, 
     position: 'relative',
+    
   },
   content: {
     flex: 1,
@@ -30,17 +32,13 @@ export default (dimensions: DimensionsModel, activeIndex: number) => StyleSheet.
   },
   arrowLeft: {
     position: 'absolute',
-    backgroundColor: 'white',
     top: '45%',
     left: '3%',
-    opacity: .5
   },
   arrowRight: {
     position: 'absolute',
-    backgroundColor: 'white',
     top: '45%',
     right: '3%',
-    opacity: .5
   },
   detailsContainer: {
     width: dimensions.width,
@@ -54,7 +52,7 @@ export default (dimensions: DimensionsModel, activeIndex: number) => StyleSheet.
     borderTopLeftRadius: 50,
     top: '-5%',
     zIndex: 99,
-    backgroundColor: 'red',
+    backgroundColor: 'white',
     width: dimensions.width,
     height: '105%',
     paddingTop: (dimensions.height || 0) * .05,
@@ -76,5 +74,14 @@ export default (dimensions: DimensionsModel, activeIndex: number) => StyleSheet.
   },
   smallFlatList: {
     marginHorizontal: (dimensions.width || 0) * .05,
-  }
+  },
+  shareContainer: {
+    flexDirection: 'row',
+    paddingVertical: '7%',
+    width: '100%',
+    justifyContent: 'center',
+  },
+  shareButton: {
+    marginLeft: '5%'
+  },
 })

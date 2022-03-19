@@ -19,9 +19,7 @@ const HomeScreen = ({navigation}: any) => {
           <MenuBar />
           <ScrollView style={styles(dimensions).content}>
             {[1, 2, 3].map(_ => (
-              <TouchableHighlight underlayColor={'transparent'} key={_} onPress={() => navigation.navigate('ServiceDetails', {screen: 'ServiceDetails'}) }>
-                <Card />
-              </TouchableHighlight>
+                <Card key={_} onPress={() => navigation.navigate('ServiceDetails', {screen: 'ServiceDetails'}) }/>
             ))}
           </ScrollView>
           <NavFooter />

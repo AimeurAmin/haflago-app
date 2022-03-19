@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, Image, TouchableOpacity, FlatList, Animated, TouchableWithoutFeedback, Dimensions } from 'react-native';
+import { View, Text, ScrollView, Image, TouchableOpacity, FlatList, Animated, TouchableWithoutFeedback, Dimensions, TouchableHighlight } from 'react-native';
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import SideMenu from '../../../Components/Shared/SideMenu/SideMenu';
@@ -12,6 +12,10 @@ import ArrowLeft from '../../../assets/svg/GalleryArrowLeft.svg';
 import normalize from '../../../utils/RN/normalizeSize';
 import ImageModel from '../../../Components/Shared/ImageModel/ImageModel';
 import { useState, useRef } from 'react';
+import FavoriteButton from './FavoriteButton/FavoriteButton';
+import ShareButton from './ShareButton/ShareButton';
+import ServiceHeader from './ServiceHeader/ServiceHeader';
+import ServiceDescription from './ServiceDescripton/ServiceDescription';
 
 const dummyImages = [
   {
@@ -39,7 +43,15 @@ const dummyImages = [
     id: '8',
     src: 'https://www.haflago.com/_next/image?url=https%3A%2F%2Fres.cloudinary.com%2Fadastra-creative%2Fimage%2Fupload%2Fq_auto%2Cf_auto%2Fumwutae8fy0s0xhatgz1&w=640&q=75'
   }
-]
+];
+
+
+const detailsText = `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla interdum, metus id vehicula aliquam, dolor magna euismod leo, nec faucibus nunc mi quis ipsum. In nec porttitor magna, sed porta tellus. Praesent ut arcu at ligula vehicula congue sit amet vitae metus. 
+
+Praesent volutpat elementum ornare. Phasellus eget felis maximus, bibendum lectus vel, gravida ipsum. Aliquam rutrum urna eget pharetra maximus. Pellentesque mollis pharetra lacus, ac pharetra tellus laoreet at. Aenean blandit lorem ipsum, eu finibus sem rutrum vitae. 
+
+Duis porttitor dui sit amet nibh blandit, eget laoreet turpis feugiat. Phasellus vestibulum suscipit neque.
+`;
 
 const ServiceDetails = ({navigation}: any) => {
   const dimensions: DimensionsModel = useSelector(({appState}: any) => appState.dimensions);
@@ -143,6 +155,18 @@ const ServiceDetails = ({navigation}: any) => {
                     <ArrowRight width={normalize(30)} height={normalize(45)} />
                   </TouchableOpacity>
                 </View>
+                {/* Favorite & Share section */}
+                <View style={style.shareContainer}>
+                  <TouchableOpacity>
+                    <FavoriteButton />
+                  </TouchableOpacity>
+                  <TouchableOpacity style={style.shareButton}>
+                    <ShareButton />
+                  </TouchableOpacity>
+                </View>
+                {/* Service Header */}
+                <ServiceHeader />
+                <ServiceDescription description={detailsText}/>
             </View>
           </View>
         </ScrollView>
