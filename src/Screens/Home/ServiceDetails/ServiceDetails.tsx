@@ -1,21 +1,19 @@
-import { View, Text, ScrollView, Image, TouchableOpacity, FlatList, Animated, TouchableWithoutFeedback, Dimensions, TouchableHighlight } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
-import SideMenu from '../../../Components/Shared/SideMenu/SideMenu';
 import styles from './styles';
 import { DimensionsModel } from '../../../Redux/Actions/appActions';
 import { useSelector } from 'react-redux';
 import MenuBar from '../../../Components/Shared/MenuBar/MenuBar';
 import NavFooter from '../../../Components/Shared/NavFooter';
-import ArrowRight from '../../../assets/svg/GalleryArrowRight.svg';
 import ArrowLeft from '../../../assets/svg/GalleryArrowLeft.svg';
-import normalize from '../../../utils/RN/normalizeSize';
-import ImageModel from '../../../Components/Shared/ImageModel/ImageModel';
 import { useState, useRef } from 'react';
 import FavoriteButton from './FavoriteButton/FavoriteButton';
 import ShareButton from './ShareButton/ShareButton';
 import ServiceHeader from './ServiceHeader/ServiceHeader';
 import ServiceDescription from './ServiceDescripton/ServiceDescription';
+import Gallery from './Gallery/Gallery';
+import SelectInput from '../../../Components/Shared/SelectInput/SelectInput';
 
 const dummyImages = [
   {
@@ -55,125 +53,36 @@ Duis porttitor dui sit amet nibh blandit, eget laoreet turpis feugiat. Phasellus
 
 const ServiceDetails = ({navigation}: any) => {
   const dimensions: DimensionsModel = useSelector(({appState}: any) => appState.dimensions);
-  const [visibleModel, setVisibleModel] = useState('');
-  const topRef = useRef<any>();
-  const thumbRef = useRef<any>();
-  const [activeIndex, setActiveIndex] = useState(0);
-  const {width} = Dimensions.get('screen');
-  const IMAGE_SIZE = ((Dimensions.get('screen').width + Dimensions.get('screen').height) / 2) * .13;
-  const style = styles(dimensions, activeIndex);
-
-  const scrollToActiveIndex = (index: number) => {
-    setActiveIndex(index);
-   
-    topRef?.current?.scrollToOffset({
-      offset: index * width,
-      animated: true
-    });
-    if(((index + 1) * (IMAGE_SIZE + 20)) >  (width / 2)) {
-      thumbRef?.current?.scrollToOffset({
-        offset: ((index + 1) * (IMAGE_SIZE + 20)) - ((width / 2) - (IMAGE_SIZE / 2)),
-        animated: true
-      })
-    }else {
-      thumbRef?.current?.scrollToOffset({
-        offset: 0,
-        animated: true
-      })
-    }
-  }
-  
+  const style = styles(dimensions);
+  // const [open, setOpen] = useState(false);
+    
   return (
     <SafeAreaView style={style.container}>
       <View style={style.container}>
         <MenuBar allowBack={true} navigation={navigation}/>
-        <ImageModel visible={visibleModel} close={() => setVisibleModel('')} imageUri={visibleModel}/>
         <ScrollView style={style.content}>
-          <View>
-            <FlatList
-              ref={topRef}
-              data={dummyImages}
-              keyExtractor={item => item.id}
-              horizontal
-              pagingEnabled={true}
-              bounces={false}
-              scrollEventThrottle={2}
-              showsHorizontalScrollIndicator={false}
-              onMomentumScrollEnd={(event) => {
-                scrollToActiveIndex(Math.round(event.nativeEvent.contentOffset.x / Dimensions.get('window').width));
-              }}
-              renderItem={({item}) => (
-                <View style={style.picCotnainer}>
-                  <TouchableWithoutFeedback onPress={() => setVisibleModel(item.src)}>
-                    <Image
-                      source={{uri: item.src}}
-                      style={style.pic}
-                      />
-                  </TouchableWithoutFeedback>
-                </View>
-              )}
-              />
-              <TouchableOpacity style={style.arrowLeft} onPress={() => scrollToActiveIndex(activeIndex > 0 ? activeIndex - 1 : activeIndex)}>
-                <ArrowLeft width={normalize(30)} height={normalize(45)} />
-              </TouchableOpacity>
-              <TouchableOpacity style={style.arrowRight} onPress={() => scrollToActiveIndex(activeIndex < dummyImages.length - 1 ? activeIndex + 1 : activeIndex)}>
-                <ArrowRight width={normalize(30)} height={normalize(45)} />
-              </TouchableOpacity>
-          </View>
+          <Gallery images={dummyImages}/>
           <View style={style.detailsContainer}>
-            <View style={style.details}>
-                <View style={style.imagesThumbList}>
-                  <TouchableOpacity onPress={() => scrollToActiveIndex(activeIndex > 0 ? activeIndex - 1 : activeIndex)} >
-                    <ArrowLeft width={normalize(30)} height={normalize(45)} />
-                  </TouchableOpacity>
-                  <FlatList
-                    ref={thumbRef}
-                    data={dummyImages}
-                    keyExtractor={item => item.id}
-                    horizontal
-                    pagingEnabled={false}
-                    bounces={false}
-                    scrollEventThrottle={32}
-                    showsHorizontalScrollIndicator={false}
-                    style={style.smallFlatList}
-                    contentContainerStyle={{flexGrow: 1, justifyContent: 'center'}}
-                    renderItem={({item, index}) => {                      
-                      return (
-                        <TouchableWithoutFeedback onPress={() => scrollToActiveIndex(index)}>
-                          <Image
-                            source={{uri: item.src}}
-                            style={[style.imageButton, {
-                              borderWidth: 2,
-                              borderColor: activeIndex === index ? '#3B276A' : 'transparent' 
-                            }]}
-                            />
-                        </TouchableWithoutFeedback>
-                      )
-                    }}
-                    />
-                  <TouchableOpacity onPress={() => scrollToActiveIndex(activeIndex < dummyImages.length - 1 ? activeIndex + 1 : activeIndex)}>
-                    <ArrowRight width={normalize(30)} height={normalize(45)} />
-                  </TouchableOpacity>
-                </View>
-                {/* Favorite & Share section */}
-                <View style={style.shareContainer}>
-                  <TouchableOpacity>
-                    <FavoriteButton />
-                  </TouchableOpacity>
-                  <TouchableOpacity style={style.shareButton}>
-                    <ShareButton />
-                  </TouchableOpacity>
-                </View>
-                {/* Service Header */}
-                <ServiceHeader />
-                <ServiceDescription description={detailsText}/>
+            <View style={style.shareContainer}>
+              <TouchableOpacity>
+                <FavoriteButton />
+              </TouchableOpacity>
+              <TouchableOpacity style={style.shareButton}>
+                <ShareButton />
+              </TouchableOpacity>
             </View>
+            <ServiceHeader />
+            <ServiceDescription description={detailsText}/>
+            {/* <SelectInput onChange={(item: any) => console.log(item)} placeholder='Please select product'/> */}
           </View>
         </ScrollView>
         <NavFooter />
+        
       </View>
     </SafeAreaView>
   )
+  
 }
 
 export default ServiceDetails
+
