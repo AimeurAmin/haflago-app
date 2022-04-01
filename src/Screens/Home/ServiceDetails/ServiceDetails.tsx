@@ -1,4 +1,4 @@
-import { View, Text, ScrollView, TouchableOpacity, Dimensions } from 'react-native';
+import { View, Text, ScrollView, TouchableOpacity, Dimensions, TextInput, Image } from 'react-native';
 import React from 'react'
 import { SafeAreaView } from 'react-native-safe-area-context'
 import styles from './styles';
@@ -14,7 +14,13 @@ import ServiceHeader from './ServiceHeader/ServiceHeader';
 import ServiceDescription from './ServiceDescripton/ServiceDescription';
 import Gallery from './Gallery/Gallery';
 import SelectInput from '../../../Components/Shared/SelectInput/SelectInput';
-
+import SectionTitle from '../../../Components/Shared/SectionTitle/SectionTitle';
+import CorrectIcon from '../../../assets/svg/Correct.svg'
+import AvailableSection from './AvailableSection/AvailableSection';
+import ContactSection from './ContactSection/ContactSection';
+import RatingSection from './RatingSection/RatingSection';
+import AverageRatingSection from './AverageRatingSection/AverageRatingSection';
+import CommentSection from './CommentSection/CommentSection';
 const dummyImages = [
   {
     id: '1',
@@ -51,11 +57,21 @@ Praesent volutpat elementum ornare. Phasellus eget felis maximus, bibendum lectu
 Duis porttitor dui sit amet nibh blandit, eget laoreet turpis feugiat. Phasellus vestibulum suscipit neque.
 `;
 
+const comments = [{
+  id: 1, 
+  comment: 'fsdjklfmsqdjl',
+  rating: 3
+}, {
+  id: 2, 
+  comment: `Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla interdum, metus id vehicula aliquam, dolor magna euismod leo, nec faucibus nunc mi quis ipsum. In nec porttitor magna, sed porta tellus. Praesent ut arcu at ligula vehicula congue sit amet vitae metus.Praesent volutpat elementum ornare. `,
+  rating: 4,
+}]
+
 const ServiceDetails = ({navigation}: any) => {
   const dimensions: DimensionsModel = useSelector(({appState}: any) => appState.dimensions);
   const style = styles(dimensions);
   // const [open, setOpen] = useState(false);
-    
+
   return (
     <SafeAreaView style={style.container}>
       <View style={style.container}>
@@ -74,6 +90,11 @@ const ServiceDetails = ({navigation}: any) => {
             <ServiceHeader />
             <ServiceDescription description={detailsText}/>
             {/* <SelectInput onChange={(item: any) => console.log(item)} placeholder='Please select product'/> */}
+            <AvailableSection />
+            <ContactSection />
+            <RatingSection />
+            <AverageRatingSection />
+            <CommentSection userComments = {comments} />
           </View>
         </ScrollView>
         <NavFooter />
