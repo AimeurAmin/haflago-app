@@ -1,13 +1,16 @@
 import * as React from 'react';
-import { View, StyleSheet, Text, Animated, TouchableOpacity, Dimensions } from 'react-native';
+import { View, Text, Animated, TouchableOpacity, Dimensions } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
-import appActions, { AppStateModel } from '../../Redux/Actions/appActions';
+import appActions, { AppStateModel } from '../../../Redux/Actions/appActions';
 import { useRef, useEffect } from 'react';
+import normalize from '../../../utils/RN/normalizeSize';
+import styles from './styles';
 
 const SideMenu = ({ children }: any) => {
   const dispatch = useDispatch();
   const { menuIsOpen, dimensions }: AppStateModel = useSelector(({ appState }: any) => appState);
-
+  const style = styles(Dimensions);
+  
   const offSetValueX = useRef(new Animated.Value(0)).current,
     offSetValueY = useRef(new Animated.Value(0)).current,
     scaleValue = useRef(new Animated.Value(menuIsOpen ? 0.8 : 1)).current;
@@ -43,7 +46,7 @@ const SideMenu = ({ children }: any) => {
 
   const _offsetX = () => {
     Animated.timing(offSetValueX, {
-      toValue: menuIsOpen ? dimensions.width / 1.3 : 0,
+      toValue: menuIsOpen ? (dimensions.width || 0) / 1.3 : 0,
       duration: 1000,
       useNativeDriver: true
     }).start();
@@ -51,29 +54,30 @@ const SideMenu = ({ children }: any) => {
 
   const _offsetY = () => {
     Animated.timing(offSetValueY, {
-      toValue: menuIsOpen ? dimensions.height / 1.3 : 0,
+      toValue: menuIsOpen ? (dimensions.height || 0) / 1.3 : 0,
       duration: 1000,
       useNativeDriver: true
     }).start();
   };
 
   return (
-    <View style={styles.container}>
-      <View style={styles.menuContainer}>
-        <Text style={styles.text}>SideMenu</Text>
+    <View style={style.container}>
+      <View style={style.menuContainer}>
+        <Text style={style.text}>SideMenu</Text>
       </View>
 
       <Animated.View style={{
-        ...styles.closedMenuChildrenStyle,
+        ...style.closedMenuChildrenStyle,
+        flex: 1,
         transform: [{ scale: scaleValue }, { translateX: offSetValueX }, { translateY: offSetValueY }],
         borderRadius: menuIsOpen ? 10 : 0,
         overflow: 'hidden',
       }}>
         {menuIsOpen ? (
-          <TouchableOpacity activeOpacity={0.9} onPress={() => menuIsOpen ? dispatch(appActions.toggleMenu()) : undefined}>
+          <TouchableOpacity style={{flex: 1}} activeOpacity={0.9} onPress={() => menuIsOpen ? dispatch(appActions.toggleMenu()) : undefined}>
             {children}
           </TouchableOpacity>
-        ) : <View>{children}</View>
+        ) : <View style={{flex: 1, backgroundColor: '#6D47A8'}}>{children}</View>
         }
       </Animated.View>
     </View >
@@ -81,27 +85,3 @@ const SideMenu = ({ children }: any) => {
 };
 
 export default SideMenu;
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    position: 'relative',
-    backgroundColor: 'white',
-    color: 'black',
-  },
-  closedMenuChildrenStyle: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    flexGrow: 1,
-    color: 'white',
-  },
-  menuContainer: {
-    width: Dimensions.get('window').width,
-    height: Dimensions.get('window').height
-  },
-  text: {
-    color: 'black',
-    fontSize: 16
-  }
-});

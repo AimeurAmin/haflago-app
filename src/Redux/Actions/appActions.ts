@@ -4,9 +4,9 @@ export interface AppStateModel {
 }
 
 export interface DimensionsModel {
-  width: number;
-  height: number;
-  isLandscape: boolean;
+  width?: number;
+  height?: number;
+  isLandscape?: boolean;
 };
 
 export const SET_DIMENSIONS = '[App] set new Dimensions';

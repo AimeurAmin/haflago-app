@@ -1,0 +1,1 @@
+export const BASE_URL = 'https://jjqfi2zi35.execute-api.eu-west-3.amazonaws.com/latest';

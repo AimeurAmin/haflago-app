@@ -1,13 +1,19 @@
 import { AuthStateModel, UserModel } from '../Models/AuthModel';
-import { AUTH_REQUEST, AUTH_SUCCESS, AUTH_FAIL } from '../Actions/authActions';
+import { AUTH_REQUEST, EMAIL_VERIFICATION_SUCCESS, LOGIN_SUCCESS, SIGNUP_SUCCESS, RESEND_VERIFICATION_SUCCESS, LOGIN_FAIL, SIGNUP_FAIL, EMAIL_VERIFICATION_FAIL, RESEND_VERIFICATION_FAIL, LOGOUT } from '../Actions/authActions';
 
 
 
 const initialState: AuthStateModel = {
-  user: {},
+  user: {
+    authData: undefined,
+    signUpData: undefined
+  },
   isConnected: false,
+  isSignedUp: false,
   error: undefined,
-  isLoading: false
+  isLoading: false,
+  verifyEmail: undefined,
+  resendCode: false
 };
 
 const AuthReducer = (state = initialState, action: {type: string; payload: any}) => {
@@ -15,29 +21,84 @@ const AuthReducer = (state = initialState, action: {type: string; payload: any})
     case AUTH_REQUEST:
       return {
         ...state,
-        isLoading: true,
-        error: undefined
+        isLoading: action.payload,
       };
 
-    case AUTH_SUCCESS:
+    case LOGIN_SUCCESS: 
       return {
         ...state,
         isConnected: true,
-        isLoading: false,
-        user: {...action.payload},
+        user: {
+          authData: {...action.payload}
+        },
         error: undefined
       };
 
-    case AUTH_FAIL:
-      console.log('action.payload error');
-      console.log(action.payload);
-            
+    case SIGNUP_SUCCESS:
       return {
+        ...state,
+        signedUp: true,
         isConnected: false,
-        isLoading: false,
-        error: action.payload,
-        user: undefined
+        user: {
+          authData: {},
+          signUpData: {...action.payload}
+        },
+        error: undefined
       };
+
+    case EMAIL_VERIFICATION_SUCCESS: 
+      return {
+        ...state,
+        verifyEmail: true,
+        user: {
+          authData: {},
+          signUpData: {}
+        },
+        error: undefined
+      }
+
+    case RESEND_VERIFICATION_SUCCESS: 
+      return {
+        ...state,
+        resendCode: true,
+        error: undefined
+      }
+
+    case SIGNUP_FAIL:
+      return {
+        ...state,
+        signedUp: false,
+        isConnected: false,
+        error: {...action.payload}
+      };
+
+    case EMAIL_VERIFICATION_FAIL: 
+      return {
+        ...state,
+        verifyEmail: false,
+        error: {...action.payload}
+      }
+
+    case RESEND_VERIFICATION_FAIL: 
+      return {
+        ...state,
+        resendCode: false,
+        error: {...action.payload}
+      }
+
+    case LOGOUT:
+      return {
+        user: {
+          authData: {},
+          signUpData: {}
+        },
+        isConnected: false,
+        isSignedUp: false,
+        error: undefined,
+        isLoading: false,
+        verifyEmail: undefined
+      }
+      
     default:
       return state;
   }
